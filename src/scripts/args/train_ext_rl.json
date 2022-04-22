@@ -1,0 +1,57 @@
+{
+  "do_train" : true,
+  "do_eval" : true,
+
+  "task_type": "two_stage_extraction",
+  "training_type": "ext_rl",
+
+  "dataset_name": "multi_news_bl_art_own",
+  "model_name_or_path": "facebook/bart-base",
+  "ext_model_name_or_path": "deepset/roberta-base-squad2",
+  "different_base_model_for_two_stage": true,
+
+  "load_trained_abstractor_from": "../outputs/multi_news_bl_art_own/finetuned_abs/bart-base-O/checkpoint-25000",
+  "load_trained_model_from": "../outputs/multi_news_bl_art_own/extractor_mle/3hier/SR_POR/checkpoint-12300",
+
+  "train_only": "extractor",
+  "label_names": "ext_labels",
+  "data_level": "article",
+  "num_hierarchical_layer": 3,
+  "reference_extraction": true,
+  "reference_column": "summary_gen",
+  "score_cls_weighting": true,
+  "update_full_action": true,
+  "use_mixer_loss": true,
+  "mixer_weight": 0.1,
+
+  "output_dir": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_sc",
+  "logging_dir": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_sc/log",
+
+  "per_device_train_batch_size": 24,
+  "per_device_eval_batch_size": 24,
+  "gradient_accumulation_steps": 1,
+
+  "num_train_epochs": 5,
+  "lr_scheduler_type": "constant",
+  "learning_rate": 1e-5,
+  "max_grad_norm": 0.1,
+  "warmup_steps": 400,
+
+  "summary_ext_column": "summary_ext",
+  "data_preprocess": "doc_trun_and_build_sent_index",
+
+  "report_to tensorboard": true,
+  "overwrite_output_dir": true,
+  "predict_with_generate": true,
+  "save_model_accord_to_rouge": true,
+  "evaluation_strategy": "steps",
+  "save_strategy": "steps",
+
+  "eval_steps": 100,
+  "save_steps": 100,
+  "save_total_limit": 1,
+  "logging_steps": 20,
+  "max_val_samples": 100
+
+}
+

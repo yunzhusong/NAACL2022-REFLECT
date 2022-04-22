@@ -1,0 +1,25 @@
+{
+  "do_predict" : true,
+
+  "task_type": "seq2seq",
+  "training_type": "mle",
+
+  "dataset_name": "multi_news_bl_art_own",
+  "model_name_or_path": "facebook/bart-large",
+
+  "load_trained_model_from": "../outputs/multi_news_bl_art_own/finetuned_abs/bart-large-O/checkpoint-7000",
+
+  "output_dir": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_cacs/checkpoint-2700",
+  "test_file":  "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_cacs/checkpoint-2700/test_extractions.csv",
+
+  "text_column": "ext_article",
+  "data_preprocess": "",
+
+  "per_device_eval_batch_size": 12,
+
+  "overwrite_output_dir": true,
+  "predict_with_generate": true,
+  "output_abstraction_results": true
+
+}
+
