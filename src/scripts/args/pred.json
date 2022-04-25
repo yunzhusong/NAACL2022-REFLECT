@@ -11,9 +11,8 @@
 
   "load_trained_abstractor_from": "../outputs/multi_news_bl_art_own/finetuned_abs/bart-base-O_run2/checkpoint-19500",
 
-  "load_trained_model_from": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_cacs/checkpoint-2700",
-
-  "output_dir": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_cacs/checkpoint-2700",
+  "load_trained_model_from": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_casc_run3/checkpoint-5400",
+  "output_dir": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_casc_run3/checkpoint-5400",
 
   "label_names": "ext_labels",
   "data_level": "article",

@@ -10,9 +10,9 @@
   "ext_model_name_or_path": "deepset/roberta-base-squad2",
   "different_base_model_for_two_stage": true,
 
-  "output_dir": "../outputs/multi_news_bl_art_own/extractor_mle/3hier/SR_POR",
-  "logging_dir": "../outputs/multi_news_bl_art_own/extractor_mle/3hier/SR_POR/log",
-  "load_trained_abstractor_from": "../outputs/multi_news_bl_art_own/finetuned_abs/bart-base-O/checkpoint-25000",
+  "output_dir": "../outputs/multi_news_bl_art_own/extractor_mle/3hier/SR_POR_run3",
+  "logging_dir": "../outputs/multi_news_bl_art_own/extractor_mle/3hier/SR_POR_run3/log",
+  "load_trained_abstractor_from": "../outputs/multi_news_bl_art_own/finetuned_abs/bart-base-O_run2/checkpoint-19500",
   "load_trained_extractor_from": "deepset/roberta-base-squad2",
 
   "train_only": "extractor",

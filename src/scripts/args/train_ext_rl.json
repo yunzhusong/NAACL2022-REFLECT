@@ -10,8 +10,8 @@
   "ext_model_name_or_path": "deepset/roberta-base-squad2",
   "different_base_model_for_two_stage": true,
 
-  "load_trained_abstractor_from": "../outputs/multi_news_bl_art_own/finetuned_abs/bart-base-O/checkpoint-25000",
-  "load_trained_model_from": "../outputs/multi_news_bl_art_own/extractor_mle/3hier/SR_POR/checkpoint-12300",
+  "load_trained_abstractor_from": "../outputs/multi_news_bl_art_own/finetuned_abs/bart-base-O_run2/checkpoint-19500",
+  "load_trained_model_from": "../../MDS/results_for_reproduce/multi_news_bl_art_own/mle_extractor/3hier/SR_POR_run2/checkpoint-16400",
 
   "train_only": "extractor",
   "label_names": "ext_labels",
@@ -20,12 +20,12 @@
   "reference_extraction": true,
   "reference_column": "summary_gen",
   "score_cls_weighting": true,
-  "update_full_action": true,
+  "update_full_action": false,
   "use_mixer_loss": true,
   "mixer_weight": 0.1,
 
-  "output_dir": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_sc",
-  "logging_dir": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_sc/log",
+  "output_dir": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_casc_run3",
+  "logging_dir": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_casc_run3/log",
 
   "per_device_train_batch_size": 24,
   "per_device_eval_batch_size": 24,
