@@ -8,6 +8,11 @@ Author: [@Yun-Zhu Song](http://github.com/yunzhusong), [@Yi-Syuan Chen](https://
 The preprocessed datasets and pretrained model will be released soon.
 
 ---
+## Environment Requirements for Your Reference
+```
+pip install -r requirements.txt
+```
+
 ## Dataset Preparation
 
 
