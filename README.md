@@ -5,7 +5,14 @@ Code for the paper: Improving Multi-Document Summarization through Referenced Fl
 
 Author: [@Yun-Zhu Song](http://github.com/yunzhusong), [@Yi-Syuan Chen](https://github.com/YiSyuanChen),Hong-Han Shuai
 
+The preprocessed datasets and pretrained model will be released soon.
+
 ---
+## Environment Requirements for Your Reference
+```
+pip install -r requirements.txt
+```
+
 ## Dataset Preparation
 
 
@@ -39,6 +46,12 @@ python ./data_download/output_dataset.py\
   --dataset_name GEM/wiki_cat_sum\
   --dataset_config film\
 ```
+## Trained Model
+
+|            | Finetuned Abstractor | Pretrained | Final |
+|------------|----------------------|------------|-------|
+| Multi-News | [Bart-Base-Oracle](https://drive.google.com/file/d/1ELzt-EjzmXhK0vKiAOy-nEkV_VxUGkYi/view?usp=sharing), [Bart-Largs-Oracle](https://drive.google.com/file/d/13UPz6_AdVpxrjj-uJxhbKLL0ZUGjdTGx/view?usp=sharing) | [download](https://drive.google.com/file/d/1-tNFQs6BNKlCJl4LGJ8SGpjHH1an5kfR/view?usp=sharing) | [download](https://drive.google.com/file/d/14lp4ViPDJlYZScQc5R4N7Y5Oje1-YShi/view?usp=sharing)|
+
 
 ## Training
 
