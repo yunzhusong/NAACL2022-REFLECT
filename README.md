@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 ## Dataset Preparation
 ### Option 1.
-Steps: (1) download the dataset; (2) get the pseudo extractio oracle and rouge score for each document sentence; (3) generate summary from the fine-tuned abstractor (4) merge the generated summary to the dataset 
+Steps: (1) download the dataset; (2) get the pseudo extractio oracle and rouge score for each document sentence; (3) generate summary from the fine-tuned abstractor (4) merge the generated summary to the dataset. The names of datasets can be found in ./src/data/build_datasets.py.
 
 
 (1) download dataset
@@ -50,12 +50,12 @@ python ./data_download/output_dataset.py\
   --dataset_config film\
 ```
 
-(2) get pseudo extraction
+(2) get pseudo extraction (take multi_news as examples)
 ```
 ./scripts/build_POR_dataset.sh
 ```
 
-(3) generate summary from fine-tuned abstractor, remember to assign the _$checkpoint_to_finetuned_abs_ and _$dataset_.
+(3) generate summary from fine-tuned abstractor, remember to assign the _$checkpoint_to_finetuned_abs_ and _$dataset_ according to different datasets
 ```
 ./scripts/generate_SR.sh
 
