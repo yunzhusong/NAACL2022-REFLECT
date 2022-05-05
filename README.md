@@ -97,8 +97,8 @@ How to change to different configs
 
 | dataset_name          | Oracle Text Column | Article Text Column |
 |-----------------------|--------------------|---------------------|
-| multi_news_bl_art_own | summary_ext        | document            | 
-| xscience2_bl_own      | summary_ext        | document            |
+| multi_news_bl_own     | summary_ext        | document            | 
+| xscience_bl_own       | summary_ext        | document            |
 
 ```
 python main.py ./scirpts/args/finetine_abs.json
