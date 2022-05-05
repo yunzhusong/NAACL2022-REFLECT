@@ -8,28 +8,31 @@ Author: [@Yun-Zhu Song](http://github.com/yunzhusong), [@Yi-Syuan Chen](https://
 The preprocessed datasets and pretrained model will be released soon.
 
 ---
-## Environment Requirements for Your Reference
+## Referenced Environment Setup
 ```
 pip install -r requirements.txt
 ```
 
 ## Dataset Preparation
+### Option 1.
+Steps: (1) download the dataset; (2) get the pseudo extractio oracle and rouge score for each document sentence; (3) generate summary from the fine-tuned abstractor (4) merge the generated summary to the dataset 
 
 
-1. Multi-News
+(1) download dataset
+
+**Multi-News**
 ```
 python ./data_download/output_dataset.py\
   --output_dir ../datasets/origin/multi_news\
   --dataset_name multi_news\
 ```
-
-2. Milti-XScience
+**Milti-XScience**
 ```
 python ./data_download/output_dataset.py\
-  --output_dir ../datasets/origin/xscence\
+  --output_dir ../datasets/origin/xscience\
   --dataset_name multi_x_science_sum\
 ```
-3. WikiCatSum (NOTE: The version of transformers is 4.12.5)
+**WikiCatSum** (NOTE: The version of transformers is 4.12.5)
 ```
 python ./data_download/output_dataset.py\
   --output_dir ../datasets/origin/wikicatsum/animal\
@@ -46,6 +49,29 @@ python ./data_download/output_dataset.py\
   --dataset_name GEM/wiki_cat_sum\
   --dataset_config film\
 ```
+
+(2) get pseudo extraction
+```
+./scripts/build_POR_dataset.sh
+```
+
+(3) generate summary from fine-tuned abstractor, remember to assign the _$checkpoint_to_finetuned_abs_ and _$dataset_.
+```
+./scripts/generate_SR.sh
+
+```
+(4) combining the generated summary to dataset, remember to assign _$merged_data_dir_, _$data_dir_, _$path_to_generated_summary_train_file_, _$path_to_generated_summary_val_file_, _$path_to_generated_summary_test_file_ according to different datasets
+```
+./scripts/build_SR_dataset.sh
+```
+
+
+### Option 2. Dowload Our Processed Dataset
+Please place the dataset to "../datasets/ext_oracle/" or change the dataset directory path in "data/build_datasets.py"
+[Multi-News](https://drive.google.com/file/d/17tZkzbtqLrcK1fHEGvQzlNwbgTSI6IjH/view?usp=sharing)
+[Xscience](https://drive.google.com/file/d/1MIERE9Y4tZEkKp2DTPtZXrGelRgUkqZJ/view?usp=sharing)
+[WikiCatSum]()
+
 ## Trained Model
 
 |            | Finetuned Abstractor | Pretrained | Final |
