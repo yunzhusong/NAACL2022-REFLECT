@@ -5,11 +5,11 @@
   "task_type": "seq2seq",
   "training_type": "mle",
 
-  "dataset_name": "multi_news_bl_art_own",
+  "dataset_name": "multi_news_bl_own",
   "model_name_or_path": "facebook/bart-base",
 
-  "output_dir": "../outputs/multi_news_bl_art_own/finetuned_abs/bart-base-O_dev",
-  "logging_dir":"../outputs/multi_news_bl_art_own/finetuned_abs/bart-base-O_dev/log",
+  "output_dir": "../outputs/multi_news/finetuned_abs/bart-base-O",
+  "logging_dir":"../outputs/multi_news/finetuned_abs/bart-base-O/log",
 
   "per_device_train_batch_size": 8,
   "per_device_eval_batch_size": 8,

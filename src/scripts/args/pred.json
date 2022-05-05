@@ -4,15 +4,15 @@
   "task_type": "two_stage_extraction",
   "training_type": "ext_rl",
 
-  "dataset_name": "multi_news_bl_art_own",
+  "dataset_name": "multi_news_bl_own",
   "model_name_or_path": "facebook/bart-base",
   "ext_model_name_or_path": "deepset/roberta-base-squad2",
   "different_base_model_for_two_stage": true,
 
-  "load_trained_abstractor_from": "../outputs/multi_news_bl_art_own/finetuned_abs/bart-base-O_run2/checkpoint-19500",
+  "load_trained_abstractor_from": "../outputs/multi_news/finetuned_abs/bart-base-O_run2/checkpoint-19500",
 
-  "load_trained_model_from": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_casc_run3/checkpoint-5400",
-  "output_dir": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_casc_run3/checkpoint-5400",
+  "load_trained_model_from": "../outputs/multi_news/extractor_rl/3hier/mle_SR_+_SR_casc_run2/checkpoint-3200",
+  "output_dir": "../outputs/multi_news/extractor_rl/3hier/mle_SR_+_SR_casc_run2/checkpoint-3200",
 
   "label_names": "ext_labels",
   "data_level": "article",

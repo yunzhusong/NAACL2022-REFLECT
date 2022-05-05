@@ -4,13 +4,13 @@
   "task_type": "seq2seq",
   "training_type": "mle",
 
-  "dataset_name": "multi_news_bl_art_own",
+  "dataset_name": "multi_news_bl_own",
   "model_name_or_path": "facebook/bart-large",
 
-  "load_trained_model_from": "../outputs/multi_news_bl_art_own/finetuned_abs/bart-large-O/checkpoint-7000",
+  "load_trained_model_from": "../outputs/multi_news/finetuned_abs/bart-large-O/checkpoint-7000",
 
-  "output_dir": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_casc_run3/checkpoint-5400",
-  "test_file": "../outputs/multi_news_bl_art_own/extractor_rl/3hier/mle_SR_POR_+_SR_casc_run3/checkpoint-5400/test_extractions.csv",
+  "output_dir": "../outputs/multi_news/extractor_rl/3hier/mle_SR_+_SR_casc_run2/checkpoint-3200",
+  "test_file": "../outputs/multi_news/extractor_rl/3hier/mle_SR_+_SR_casc_run2/checkpoint-3200/test_extractions.csv",
 
   "text_column": "ext_article",
   "data_preprocess": "",

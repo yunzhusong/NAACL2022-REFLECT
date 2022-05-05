@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=3
 
 # 1. Finetune abstractor with oracle input
 #python main.py ./scripts/args/finetune_abs.json

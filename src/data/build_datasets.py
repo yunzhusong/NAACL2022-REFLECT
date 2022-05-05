@@ -20,42 +20,28 @@ import pdb
 summarization_name_mapping = {
     "multi_news": ("document", "summary"),
     "multi_news_own": ("document", "summary"),
-    "multi_news_bl_art_own": ("document", "summary"),
-    "multi_news_bl_ora_own": ("document", "summary"),
-    "multi_news_pag_art_own": ("document", "summary"),
-    "multi_news_pag_ora_own": ("document", "summary"),
-    "xscience2_bl_own": ("document", "related_work"),
-    "arxiv": ("article", "abstract"),
-    "arxiv_own": ("article", "abstract"),
-    "arxiv_pag_own": ("article", "abstract"),
-    "pubmed": ("article", "abstract"),
-    "pubmed": ("article", "abstract"),
+    "multi_news_bl_own": ("document", "summary"),
+
+    "xscience_own": ("document", "related_work"),
+    "xscience_bl_own": ("document", "related_work"),
+
     "wiki_cat_sum_animal_own": ("paragraphs", "summary"),
     "wiki_cat_sum_company_own": ("paragraphs", "summary"),
     "wiki_cat_sum_film_own": ("paragraphs", "summary"),
-    "wiki_cat_sum_animal_o_own": ("paragraphs", "summary"),
-    "wiki_cat_sum_company_o_own": ("paragraphs", "summary"),
-    "wiki_cat_sum_film_o_own": ("paragraphs", "summary"),
-    "wiki_cat_sum_animal_bl_own": ("paragraphs", "summary"),
-    "wiki_cat_sum_company_bl_own": ("paragraphs", "summary"),
-    "wiki_cat_sum_film_bl_own": ("paragraphs", "summary"),
+    "wiki_cat_sum_animal_o_own": ("document", "summary"),
+    "wiki_cat_sum_company_o_own": ("document", "summary"),
+    "wiki_cat_sum_film_o_own": ("document", "summary"),
+    "wiki_cat_sum_animal_bl_own": ("document", "summary"),
+    "wiki_cat_sum_company_bl_own": ("document", "summary"),
+    "wiki_cat_sum_film_bl_own": ("document", "summary"),
 }
 
 summarization_length_mapping = {
-    "xsum": (1024, 64),
-    "cnn_dailymail": (1024, 128),
-    "newsroom": (1024, 128),
     "multi_news": (1024, 256),
     "multi_news_own": (1024, 512),
-    "multi_news_bl_art_own": (1024, 512),
-    "multi_news_bl_ora_own": (1024, 512),
-    "multi_news_pag_art_own": (1024, 512),
-    "multi_news_pag_ora_own": (1024, 512),
-    "xsum_own": (1024, 64),
-    "xscience2_bl_own": (1024, 256),
-    "arxiv": (1024, 256),
-    "arxiv_own": (1024, 256),
-    "arxiv_pag_own": (1024, 256),
+    "multi_news_bl_own": (1024, 512),
+    "xscience_own": (1024, 256),
+    "xscience_bl_own": (1024, 256),
     "wiki_cat_sum_animal_own": (1024, 128),
     "wiki_cat_sum_company_own": (1024, 128),
     "wiki_cat_sum_film_own": (1024, 128),
@@ -68,36 +54,31 @@ summarization_length_mapping = {
 }
 
 summarization_own_file_mapping = {
-    "multi_news_own":
-        "../datasets/ext_oracle/20/multi_news_own",
-    "multi_news_ext_own":
-        "../datasets/ext_oracle/20/multi_news_ext_own",
-    "multi_news_bl_art_own":
-        "../datasets/ext_oracle/with_doc_split_sep/multi_news_bl_own/origin",
-    "multi_news_bl_ora_own":
-        "../datasets/ext_oracle/with_doc_split_sep/multi_news_bl_own/ext_oracle",
-    "multi_news_pag_art_own":
-        "../datasets/ext_oracle/with_doc_split_sep/multi_news_pag_own/origin",
-    "multi_news_pag_ora_own":
-        "../datasets/ext_oracle/with_doc_split_sep/multi_news_pag_own/ext_oracle",
-    "xscience2_bl_own":
-        "../datasets/ext_oracle/with_doc_split_sep/xscience2_bl_own",
-    "arxiv_own":
-        "../datasets/ext_oracle/arxiv_own",
-    "arxiv_pag_own":
-        "../datasets/ext_oracle/arxiv_pag_own",
+    # Original
     "wiki_cat_sum_animal_own":
         "../datasets/origin/wikicatsum/animal",
     "wiki_cat_sum_company_own":
         "../datasets/origin/wikicatsum/company",
     "wiki_cat_sum_film_own":
         "../datasets/origin/wikicatsum/film",
+
+    # With pseudo extraction oracle and rouge score
+    "multi_news_own":
+        "../datasets/ext_oracle/multi_news_own",
+    "xscience_own":
+        "../datasets/ext_oracle/xscience_own",
     "wiki_cat_sum_animal_o_own":
         "../datasets/ext_oracle/wikicatsum/animal_own",
     "wiki_cat_sum_company_o_own":
         "../datasets/ext_oracle/wikicatsum/company_own",
     "wiki_cat_sum_film_o_own":
         "../datasets/ext_oracle/wikicatsum/film_own",
+
+    # With generated summary (bl is short for bart_large)
+    "multi_news_bl_aown":
+        "../datasets/ext_oracle/multi_news_bl_own",
+    "xscience_bl_own":
+        "../datasets/ext_oracle/xscience_bl_own",
     "wiki_cat_sum_animal_bl_own":
         "../datasets/ext_oracle/wikicatsum/animal_bl_own",
     "wiki_cat_sum_company_bl_own":

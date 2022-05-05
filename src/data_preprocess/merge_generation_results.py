@@ -36,10 +36,10 @@ splited_data_dir_mapping = {
     "arxiv_own": "../datasets/arxiv_own_splited",
 }
 splited_gen_dir_mapping = {
-    "wikicatsum/animal_own": "../results_for_rebuttal/wiki_cat_sum_animal_own/finetuned_abs/bart-large-cnn-A/checkpoint-21500",
-    "wikicatsum/company_own": "../results_for_rebuttal/wiki_cat_sum_company_own/finetuned_abs/bart-large-A/checkpoint-14250",
-    "wikicatsum/film_own": "../results_for_rebuttal/wiki_cat_sum_film_own/finetuned_abs/bart-large-cnn-A/checkpoint-12000",
-    "arxiv_own": "../results_for_rebuttal/arxiv_own/finetuned_abs/pegasus-A/",
+    "wikicatsum/animal_own": "../outputs/wiki_cat_sum_animal_own/finetuned_abs/bart-large-cnn-A/checkpoint-21500",
+    "wikicatsum/company_own": "../outputs/wiki_cat_sum_company_own/finetuned_abs/bart-large-A/checkpoint-14250",
+    "wikicatsum/film_own": "../outputs/wiki_cat_sum_film_own/finetuned_abs/bart-large-cnn-A/checkpoint-12000",
+    "arxiv_own": "../outputs/arxiv_own/finetuned_abs/pegasus-A/",
 }
 merged_data_dir_mapping = {
     "wikicatsum/animal_own": "../datasets/ext_oracle/wikicatsum/animal_bl_own",
@@ -101,7 +101,6 @@ def merge_generated_result_to_dataset_with_shuffle(args):
     df_train = remove_empty(df_train, article_column)
     df_test = remove_empty(df_test, article_column)
 
-    pdb.set_trace()
     df_val.to_csv(merged_data_dir+"/validation.csv", index=False)
     df_test.to_csv(merged_data_dir+"/test.csv", index=False)
     df_train.to_csv(merged_data_dir+"/train.csv", index=False)

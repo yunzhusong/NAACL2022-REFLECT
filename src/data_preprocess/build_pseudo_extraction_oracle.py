@@ -42,7 +42,6 @@ def _get_ngrams(n, text):
         ngram_set.add(tuple(text[i:i + n]))
     return ngram_set
 
-
 def _get_word_ngrams(n, sentences):
     """Calculates word n-grams for multiple sentences.
     """
@@ -51,7 +50,6 @@ def _get_word_ngrams(n, sentences):
 
     words = sum(sentences, [])
     return _get_ngrams(n, words)
-
 
 def cal_rouge(evaluated_ngrams, reference_ngrams):
     reference_count = len(reference_ngrams)
@@ -72,7 +70,6 @@ def cal_rouge(evaluated_ngrams, reference_ngrams):
 
     f1_score = 2.0 * ((precision * recall) / (precision + recall + 1e-8))
     return {"f": f1_score, "p": precision, "r": recall}
-
 
 def greedy_selection(doc_sent_list, abstract_sent_list, summary_size, rouge_type='f'):
 
@@ -145,54 +142,40 @@ def get_rouge_for_each_sentence(doc_sent_list, abstract_sent_list, rouge_type='f
     return rouge_1_scores, rouge_2_scores
 
 
-##############################
-
+####################################
 
 def extractive_oracle(args,
                       file_path,
                       art_column,
                       summ_column,
-                      df=None,
+                      df,
                       rouge_type='r',
                       max_samples=None,
                       sent_num=None,
                       max_sent_len=None,
-                      add_generated_results=None,
                      ):
-    file_dir, file_name = os.path.split(file_path)
-    assert args.output_dir != file_dir
 
-    df = pd.read_pickle(file_path)
+    # Create extractive oracle and add back to dataset
+    print(f"Creating extractive oracle according to ROUGE for {args.dataset}...")
+
+    if df is None:
+        df = pd.read_csv(file_path)
+        file_dir, file_name = os.path.split(file_path)
+        assert args.output_dir != file_dir
+
     if max_samples:
         df = df.iloc[:max_samples]
 
-    # Create extractive oracle and add back to dataset
-    print(f"Creating extractive oracle according to ROUGE for {file_path}...")
-
-    #summ_column = 'summary'
-    #gen_summ_column = 'gen_summary'
-    #gen_summ_column = 'gen_' + summ_column
-    gen_summ_column = 'gen_summary'
     proper_end_characters = ['.', '?', '!', '...']
+
+    #art_column = art_column
+    #summ_column = summ_column
 
     def _extractive_oracle(data):
 
-        # NOTE: handle none input
-        all_sents = []
-        for doc in data[art_column]:
-            for sent in doc:
-                all_sents.append(sent)
-        pdb.set_trace()
-        flat_input = ' '.join(all_sents)
-        if len(flat_input) < 2:
-            pdb.set_trace()
-
-        '''
         if not isinstance(data[art_column], str):
-            pdb.set_trace()
             data[art_column] = " "
         if not isinstance(data[summ_column], str):
-            pdb.set_trace()
             data[summ_column] = " "
 
         # NOTE: handle special tokens in multi-documents
@@ -209,44 +192,34 @@ def extractive_oracle(args,
 
                 sents = nltk.sent_tokenize(art)
                 art_sents += sents
-                # Add <cls> before each sent
-                #arts.append('<cls> '+'<cls> '.join(sents))
-                #arts.append('<s>'+'<s>'.join(sents))
-                #arts.append(' '.join(sents))
                 arts.append(sents)
 
-            # Add </s> for split documents
-            data[art_column] = arts
-            """
-            data[art_column] = '||||'.join(arts)
-            #data[art_column] = '</s>'.join(arts)
-            if data[art_column][:3]=='<s>':
-                data[art_column] = '||||'.join(arts)[3:]
-                #data[art_column] = '</s>'.join(arts)[3:]
-            """
+            data["document"] = arts
+
+        elif args.dataset == "xscience":
+            arts, art_sents = [], []
+            articles = [data[art_column]]
+            ref_abstracts = data["ref_abstract"][art_column]
+            ref_cites = data["ref_abstract"]["cite_N"]
+            ref_abstracts_with_cites = []
+            for cite, abst in zip(ref_cites, ref_abstracts):
+                ref_abstracts_with_cites.append("{} {}".format(cite, abst))
+            articles += ref_abstracts_with_cites
+            for art in articles:
+                art = art.strip()
+                if art == "":
+                    continue
+                if art[-1] not in proper_end_characters:
+                    art = art + '.'
+
+                sents = nltk.sent_tokenize(art)
+                art_sents += sents
+                arts.append(sents)
+
+            data["document"] = arts
 
         else:
             art_sents = nltk.sent_tokenize(data[art_column])
-
-        # NOTE: Extract for genertaed summary
-        if add_generated_results:
-            summ_sent = data[gen_summ_column]
-
-
-            art_sents_tokens = [nltk.word_tokenize(sent) for sent in art_sents]
-            art_sents_tokens = [s[:max_sent_len] for s in art_sents_tokens]
-            summ_sent_tokens = [nltk.word_tokenize(summ_sent)]
-            gen_selected_indices = greedy_selection(art_sents_tokens,
-                                                    summ_sent_tokens,
-                                                    sent_num,
-                                                    rouge_type=rouge_type)
-
-            gen_selected_sents = []
-            for idx in np.sort(gen_selected_indices):
-                gen_selected_sents.append(art_sents[idx])
-
-            data[gen_summ_column + '_ext'] = ' '.join(gen_selected_sents) # NOTE
-            data[gen_summ_column + '_ext_idx'] = ' '.join(list(map(str, gen_selected_indices)))
 
         # NOTE: Extract for summary
 
@@ -266,12 +239,26 @@ def extractive_oracle(args,
         rouge_1_scores, rouge_2_scores = get_rouge_for_each_sentence(
             art_sents_tokens,
             summ_sent_tokens,
-            rouge_type='f',
+            rouge_type='r',
         )
         selected_sents = []
         for idx in np.sort(selected_indices):
             selected_sents.append(art_sents[idx])
 
+        #summ_column = "summary"
+        #art_column = "document"
+        data['summary_ext'] = selected_sents # NOTE
+        data['summary_ext_idx'] = ' '.join(list(map(str, selected_indices)))
+        data['summary_ext_rouge1_r'] = selected_rouge_1
+        data['summary_ext_rouge2_r'] = selected_rouge_2
+
+        data['document_num_sent'] = len(art_sents)
+        data['document_num_ext_idx'] = len(selected_indices)
+        data['document_rouge1_f'] = rouge_1_scores
+        data['document_rouge2_f'] = rouge_2_scores
+        data["document"] = art_sents
+
+        """
         #data[summ_column + '_ext'] = ' '.join(selected_sents) # NOTE
         data[summ_column + '_ext'] = selected_sents # NOTE
         data[summ_column + '_ext_idx'] = ' '.join(list(map(str, selected_indices)))
@@ -283,25 +270,16 @@ def extractive_oracle(args,
         data[art_column + '_rouge1_f'] = rouge_1_scores
         data[art_column + '_rouge2_f'] = rouge_2_scores
         data[art_column] = art_sents
-        #else:
-        #    # NOTE: use summary sentence if the article is empty
-        #    if add_generated_results:
-        #        data[gen_summ_column + '_ext'] = data[gen_summ_column]
-        #        data[gen_summ_column + '_ext_idx'] = '0'
-
-        #art_sents = nltk.sent_tokenize(data[art_column])
-
+        """
         return data
-        '''
 
-
+    #df = df.progress_apply(lambda d: _extractive_oracle(d, art_summ, sent_summ, ), axis=1)
     df = df.progress_apply(lambda d: _extractive_oracle(d), axis=1)
     #df = df.parallel_apply(lambda d: _extractive_oracle(d), axis=1)
 
     # Output results as CSV
     os.makedirs(args.output_dir, exist_ok=True)
     df.to_csv(os.path.join(args.output_dir, file_name), index=False)
-
 
 def combine_generated_result_to_df(args,
                                    file_path,
@@ -317,121 +295,45 @@ def combine_generated_result_to_df(args,
     return df
 
 
-
-
-
 def main(args, art_column, summ_column):
 
-    val_df = None
-    train_df = None
-    test_df = None
+    val_df, train_df, test_df = None, None, None
+    if args.dataset=="xscience":
+        datasets = load_dataset("multi_x_science_sum")
+        val_df = pd.DataFrame(datasets["validation"])
+        test_df = pd.DataFrame(datasets["test"])
+        train_df = pd.DataFrame(datasets["train"])
 
-    # Val
-    extractive_oracle(args, args.validation_file, art_column, summ_column, val_df,
-                      'r', args.max_val_samples, args.sent_num, args.max_sent_len,
-                     args.add_generated_results
-                     )
 
-    # Train
-    if args.add_generated_results:
-        train_df = combine_generated_result_to_df(args,
-                                                  args.train_file,
-                                                  args.generated_train_result_file,
-                                                  'gen_summary',
-                                                 )
-    else:
-        train_df = None
-
-    extractive_oracle(args, args.train_file, art_column, summ_column, train_df,
-                     'r', args.max_train_samples, args.sent_num, args.max_sent_len,
-                     args.add_generated_results
-                     )
-
-    # Test
-    if args.add_generated_results:
-        test_df = combine_generated_result_to_df(args,
-                                                 args.test_file,
-                                                 args.generated_test_result_file,
-                                                 'gen_summary',
-                                                )
-    else:
-        test_df = None
-
-    extractive_oracle(args, args.test_file, art_column, summ_column, test_df,
-                      'r', args.max_test_samples, args.sent_num, args.max_sent_len,
-                     args.add_generated_results,
-                     )
+    if args.validation_file is not None:
+        extractive_oracle(args, args.validation_file, art_column, summ_column, val_df,
+                          'r', args.max_val_samples, args.sent_num, args.max_sent_len,
+                         )
+    if args.train_file is not None:
+        extractive_oracle(args, args.train_file, art_column, summ_column, train_df,
+                         'r', args.max_train_samples, args.sent_num, args.max_sent_len,
+                         )
+    if args.test_file is not None:
+        extractive_oracle(args, args.test_file, art_column, summ_column, test_df,
+                          'r', args.max_test_samples, args.sent_num, args.max_sent_len,
+                         )
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Extract Extractive Oracle according to ROUGE')
     parser.add_argument("--dataset", type=str, required=True)
-    parser.add_argument("--train_file", type=str, required=True)
-    parser.add_argument("--validation_file", type=str, required=True)
-    parser.add_argument("--test_file", type=str, required=True)
+    parser.add_argument("--train_file", type=str, default=None)
+    parser.add_argument("--validation_file", type=str, default=None)
+    parser.add_argument("--test_file", type=str, default=None)
     parser.add_argument("--output_dir", type=str, required=True)
-    parser.add_argument("--max_train_samples", type=int, default=1000000)
-    parser.add_argument("--max_val_samples", type=int, default=1000000)
-    parser.add_argument("--max_test_samples", type=int, default=1000000)
-    parser.add_argument("--sent_num", type=int, default=3)
-    parser.add_argument("--max_sent_len", type=int, default=128)
-    parser.add_argument("--add_generated_results", action='store_true')
-    parser.add_argument("--generated_train_result_file", type=str, required=False)
-    parser.add_argument("--generated_validation_result_file", type=str, required=False)
-    parser.add_argument("--generated_test_result_file", type=str, required=False)
-    parser.add_argument("--generated_summ_prefix", type=str, required=False)
+    parser.add_argument("--max_train_samples", type=int, default=None)
+    parser.add_argument("--max_val_samples", type=int, default=None)
+    parser.add_argument("--max_test_samples", type=int, default=None)
+    parser.add_argument("--sent_num", type=int, default=30)
+    parser.add_argument("--max_sent_len", type=int, default=1024)
     args = parser.parse_args()
 
     art_column, summ_column = summarization_name_mapping.get(args.dataset, None)
 
     main(args, art_column, summ_column)
 
-
-'''
-# Use huggingface metric, but slower
-import datasets
-from datasets import load_metric
-datasets.logging.set_verbosity_error()
-metric = load_metric("rouge")
-
-def _extractive_oracle(data):
-    cand_ids = list(range(len(art_sents)))
-    cand_scores = []
-    selected_ids = []
-    selected_sents = []
-    max_score = -1
-    oracle_sent_num = 3
-    for _ in range(oracle_sent_num):
-        # Compute score for each article sentence
-        for cand_id in cand_ids:
-            cat_sent = " ".join(selected_sents + [art_sents[cand_id]])
-            results = metric.compute(predictions=[cat_sent],
-                                     references=[summ_sent],
-                                     rouge_types=["rouge1","rouge2"])
-
-            rouge_1 = results['rouge1'].mid.fmeasure
-            rouge_2 = results['rouge2'].mid.fmeasure
-            cand_scores.append(rouge_1 + rouge_2)
-
-        # Check if improve Rouge
-        cur_max_score = max(cand_scores)
-        if cur_max_score > max_score:
-            max_score = cur_max_score
-        else:
-            break
-
-        # Record and pop out the selected sentence
-        selected_id = cand_ids[cand_scores.index(cur_max_score)]
-        selected_ids.append(selected_id)
-        selected_sents.append(art_sents[selected_id])
-
-        cand_ids.pop(cand_scores.index(cur_max_score))
-
-        # Reset candidate scores
-        cand_scores = []
-
-    # Add extractive oracle back to dataset
-    data[summ_column+'_ext'] = ' '.join(selected_sents)
-
-    return data
-'''
