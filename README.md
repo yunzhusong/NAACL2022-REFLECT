@@ -70,7 +70,7 @@ python ./data_download/output_dataset.py\
 Please place the dataset to "../datasets/ext_oracle/" or change the dataset directory path in "data/build_datasets.py"
 [Multi-News](https://drive.google.com/file/d/17tZkzbtqLrcK1fHEGvQzlNwbgTSI6IjH/view?usp=sharing)
 [Xscience](https://drive.google.com/file/d/1MIERE9Y4tZEkKp2DTPtZXrGelRgUkqZJ/view?usp=sharing)
-[WikiCatSum]()
+[WikiCatSum](https://drive.google.com/file/d/1BoDkO6P-lmCrRKnLhT7PNnOWzyRCNPF1/view?usp=sharing)
 
 ## Trained Model
 
