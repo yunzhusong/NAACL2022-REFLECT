@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 ## Dataset Preparation
 ### Option 1.
-Steps: (1) download the dataset; (2) get the pseudo extractio oracle and rouge score for each document sentence; (3) generate summary from the fine-tuned abstractor (4) merge the generated summary to the dataset. The names of datasets can be found in ./src/data/build_datasets.py.
+Steps: (1) download the dataset; (2) get the pseudo extractio oracle and rouge score for each document sentence; (3) generate summary from the fine-tuned abstractor (4) merge the generated summary to the dataset. The names of datasets can be found in **src/data/build_datasets.py**.
 
 
 (1) download dataset
@@ -67,7 +67,8 @@ python ./data_download/output_dataset.py\
 
 
 ### Option 2. Dowload Our Processed Dataset
-Please place the dataset to "../datasets/ext_oracle/" or change the dataset directory path in "data/build_datasets.py"
+Please place the dataset to **datasets/ext_oracle/** or change the dataset directory path in **src/data/build_datasets.py**.
+
 [Multi-News](https://drive.google.com/file/d/17tZkzbtqLrcK1fHEGvQzlNwbgTSI6IjH/view?usp=sharing)
 [Xscience](https://drive.google.com/file/d/1MIERE9Y4tZEkKp2DTPtZXrGelRgUkqZJ/view?usp=sharing)
 [WikiCatSum](https://drive.google.com/file/d/1BoDkO6P-lmCrRKnLhT7PNnOWzyRCNPF1/view?usp=sharing)
