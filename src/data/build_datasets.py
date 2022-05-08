@@ -75,7 +75,7 @@ summarization_own_file_mapping = {
         "../datasets/ext_oracle/wikicatsum/film_own",
 
     # With generated summary (bl is short for bart_large)
-    "multi_news_bl_aown":
+    "multi_news_bl_own":
         "../datasets/ext_oracle/multi_news_bl_own",
     "xscience_bl_own":
         "../datasets/ext_oracle/xscience_bl_own",
