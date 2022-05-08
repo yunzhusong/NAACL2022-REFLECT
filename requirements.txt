@@ -50,8 +50,6 @@ tensorboard==2.3.0
 tensorboard-plugin-wit==1.8.0
 threadpoolctl==3.0.0
 tokenizers==0.10.3
-torch==1.8.0+cu111
-torch-scatter==2.0.8
 tqdm==4.62.3
 transformers==4.5.0
 typing-extensions==3.10.0.2
