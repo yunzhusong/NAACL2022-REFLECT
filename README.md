@@ -77,7 +77,7 @@ Please place the dataset to **datasets/ext_oracle/** or change the dataset direc
 
 |            | Finetuned Abstractor | Pretrained | Final |
 |------------|----------------------|------------|-------|
-| Multi-News | [Bart-Base-Oracle](https://drive.google.com/file/d/1ELzt-EjzmXhK0vKiAOy-nEkV_VxUGkYi/view?usp=sharing), [Bart-Large-Oracle](https://drive.google.com/file/d/1VyIVTSgMb5Rx3BZ0aKtrB8S-gCoJDx6_/view?usp=sharing) | [download](https://drive.google.com/file/d/1-tNFQs6BNKlCJl4LGJ8SGpjHH1an5kfR/view?usp=sharing) | [download](https://drive.google.com/file/d/14lp4ViPDJlYZScQc5R4N7Y5Oje1-YShi/view?usp=sharing)|
+| Multi-News | [Bart-Base-Oracle](https://drive.google.com/file/d/13UPz6_AdVpxrjj-uJxhbKLL0ZUGjdTGx/view?usp=sharing), [Bart-Large-Oracle](https://drive.google.com/file/d/1VyIVTSgMb5Rx3BZ0aKtrB8S-gCoJDx6_/view?usp=sharing) | [download](https://drive.google.com/file/d/1-tNFQs6BNKlCJl4LGJ8SGpjHH1an5kfR/view?usp=sharing) | [download](https://drive.google.com/file/d/14lp4ViPDJlYZScQc5R4N7Y5Oje1-YShi/view?usp=sharing)|
 
 
 ## Training
