@@ -30,7 +30,7 @@ trained_abs_model_mapping={
 
 }
 trained_ext_model_mapping={
-    "multi_news_bl_art_own":{
+    "multi_news_bl_own":{
         "roberta-base-squad2": "../results_for_reproduce/pretrain/roberta-base-squad2",
     },
 
