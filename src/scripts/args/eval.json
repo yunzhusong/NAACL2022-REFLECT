@@ -9,8 +9,8 @@
 
   "load_trained_model_from": "../outputs/multi_news/finetuned_abs/bart-large-O/checkpoint-7000",
 
-  "output_dir": "../outputs/multi_news/extractor_rl/3hier/mle_SR_+_SR_casc_run2/checkpoint-3200",
-  "test_file": "../outputs/multi_news/extractor_rl/3hier/mle_SR_+_SR_casc_run2/checkpoint-3200/test_extractions.csv",
+  "output_dir": "../outputs/multi_news/extractor_rl/final/checkpoint-3200",
+  "test_file": "../outputs/multi_news/extractor_rl/final/checkpoint-3200/test_extractions.csv",
 
   "text_column": "ext_article",
   "data_preprocess": "",
