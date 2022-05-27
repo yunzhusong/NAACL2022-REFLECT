@@ -1,6 +1,6 @@
 # NAACL2022-REFLECT
 
-Code for the paper: Improving Multi-Document Summarization through Referenced Flexible Extraction with Credit-Awareness
+Code for the paper: [Improving Multi-Document Summarization through Referenced Flexible Extraction with Credit-Awareness](https://arxiv.org/abs/2205.01889)
 ![MDS_framework](https://user-images.githubusercontent.com/45812808/164428295-66af2bfd-3e07-4e2d-a3c8-ecdd56df7857.png)
 
 Author: [@Yun-Zhu Song](http://github.com/yunzhusong), [@Yi-Syuan Chen](https://github.com/YiSyuanChen),Hong-Han Shuai
