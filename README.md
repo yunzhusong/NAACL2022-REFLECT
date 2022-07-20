@@ -79,6 +79,9 @@ Please place the dataset to **datasets/ext_oracle/** or change the dataset direc
 |------------|----------------------|------------|-------|
 | Multi-News | [Bart-Base-Oracle](https://drive.google.com/file/d/13UPz6_AdVpxrjj-uJxhbKLL0ZUGjdTGx/view?usp=sharing), [Bart-Large-Oracle](https://drive.google.com/file/d/1VyIVTSgMb5Rx3BZ0aKtrB8S-gCoJDx6_/view?usp=sharing) | [download](https://drive.google.com/file/d/1-tNFQs6BNKlCJl4LGJ8SGpjHH1an5kfR/view?usp=sharing) | [download](https://drive.google.com/file/d/14lp4ViPDJlYZScQc5R4N7Y5Oje1-YShi/view?usp=sharing)|
 
+## Predictions of REFLECT
+WikiCatSum: [Animal](https://drive.google.com/file/d/1mlFr_5ukU7e3AIEPHDfhv3PBVpckp92U/view?usp=sharing), [Company](https://drive.google.com/file/d/1gQI541wJfIA260ZgO-b7JIORGbofIG2E/view?usp=sharing), [Film](https://drive.google.com/file/d/1KHdyBz7TjE4BwUAkq58BdMXJvlmOEs6c/view?usp=sharing)
+
 <!-- ## Predictions of REFLECT
 [WikiCatSum](https://drive.google.com/drive/folders/1CSt5VORNeB1-fAqk4GAts0Jp9VYyfImP?usp=sharing)
 -->
