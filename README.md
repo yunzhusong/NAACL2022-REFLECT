@@ -15,7 +15,7 @@ pip install -r requirements.txt
 
 ## Dataset Preparation
 ### Option 1.
-Steps: (1) download the dataset; (2) get the pseudo extractio oracle and rouge score for each document sentence; (3) generate summary from the fine-tuned abstractor (4) merge the generated summary to the dataset. The names of datasets can be found in **src/data/build_datasets.py**.
+Steps: (1) download the dataset; (2) get the pseudo extractio oracle and rouge score for each document sentence; (3) generate summary from the fine-tuned abstractor; (4) merge the generated summary to the dataset. The names of datasets can be found in **src/data/build_datasets.py**.
 
 
 (1) download dataset
@@ -66,28 +66,29 @@ python ./data_download/output_dataset.py\
 
 
 ### Option 2. Dowload Our Processed Dataset
-Please place the dataset to **datasets/ext_oracle/** or change the dataset directory path in **src/data/build_datasets.py**.
+Please place the dataset at **datasets/ext_oracle/** or change the dataset directory path in **src/data/build_datasets.py**.
 
-[Multi-News](https://drive.google.com/file/d/17tZkzbtqLrcK1fHEGvQzlNwbgTSI6IjH/view?usp=sharing)
-[Xscience](https://drive.google.com/file/d/1MIERE9Y4tZEkKp2DTPtZXrGelRgUkqZJ/view?usp=sharing)
+[Multi-News](https://drive.google.com/file/d/17tZkzbtqLrcK1fHEGvQzlNwbgTSI6IjH/view?usp=sharing),
+[Xscience](https://drive.google.com/file/d/1MIERE9Y4tZEkKp2DTPtZXrGelRgUkqZJ/view?usp=sharing),
 [WikiCatSum](https://drive.google.com/file/d/1BoDkO6P-lmCrRKnLhT7PNnOWzyRCNPF1/view?usp=sharing)
+
 
 ## Trained Model
 
-|            | Finetuned Abstractor | Pretrained | Final |
-|------------|----------------------|------------|-------|
+|   Dataset  | Finetuned Abstractor | Pretrained (REFLECT-MLE) | Final (REFLECT) |
+|------------|----------------------|--------------------------|-----------------|
 | Multi-News | [Bart-Base-Oracle](https://drive.google.com/file/d/13UPz6_AdVpxrjj-uJxhbKLL0ZUGjdTGx/view?usp=sharing), [Bart-Large-Oracle](https://drive.google.com/file/d/1VyIVTSgMb5Rx3BZ0aKtrB8S-gCoJDx6_/view?usp=sharing) | [download](https://drive.google.com/file/d/1-tNFQs6BNKlCJl4LGJ8SGpjHH1an5kfR/view?usp=sharing) | [download](https://drive.google.com/file/d/14lp4ViPDJlYZScQc5R4N7Y5Oje1-YShi/view?usp=sharing)|
 
-## Predictions
-### REFLECT
-WikiCatSum: [Animal](https://drive.google.com/file/d/1mlFr_5ukU7e3AIEPHDfhv3PBVpckp92U/view?usp=sharing), [Company](https://drive.google.com/file/d/1gQI541wJfIA260ZgO-b7JIORGbofIG2E/view?usp=sharing), [Film](https://drive.google.com/file/d/1KHdyBz7TjE4BwUAkq58BdMXJvlmOEs6c/view?usp=sharing)
 
-### Finetuned BART-Large
-WikiCatSum: [Animal](https://drive.google.com/file/d/1PP5nXdXSjH4jy6J0fjlDVZXJ-h9LoWf5/view?usp=sharing), [Company](https://drive.google.com/file/d/1nUgWnnzsGQvAqR8cj8hYqPL37CaeogpJ/view?usp=sharing), [Film](https://drive.google.com/file/d/1xxTevhR2pqcbh9mjuJG2GUHsf63OZDzf/view?usp=sharing)
+## Predictions
+| Dataset | BART-Large | REFLECT |
+|---------|------------|---------|
+| WikiCatSum |[Animal](https://drive.google.com/file/d/1PP5nXdXSjH4jy6J0fjlDVZXJ-h9LoWf5/view?usp=sharing), [Company](https://drive.google.com/file/d/1nUgWnnzsGQvAqR8cj8hYqPL37CaeogpJ/view?usp=sharing), [Film](https://drive.google.com/file/d/1xxTevhR2pqcbh9mjuJG2GUHsf63OZDzf/view?usp=sharing)|[Animal](https://drive.google.com/file/d/1mlFr_5ukU7e3AIEPHDfhv3PBVpckp92U/view?usp=sharing), [Company](https://drive.google.com/file/d/1gQI541wJfIA260ZgO-b7JIORGbofIG2E/view?usp=sharing), [Film](https://drive.google.com/file/d/1KHdyBz7TjE4BwUAkq58BdMXJvlmOEs6c/view?usp=sharing) |
 
 <!-- ## Predictions of REFLECT
 [WikiCatSum](https://drive.google.com/drive/folders/1CSt5VORNeB1-fAqk4GAts0Jp9VYyfImP?usp=sharing)
 -->
+
 
 ## Training
 
