@@ -58,7 +58,6 @@ python ./data_download/output_dataset.py\
 (3) generate summary from fine-tuned abstractor, remember to assign the _$checkpoint_to_finetuned_abs_ and _$dataset_ according to different datasets
 ```
 ./scripts/generate_SR.sh
-
 ```
 (4) combining the generated summary to dataset, remember to assign _$merged_data_dir_, _$data_dir_, _$path_to_generated_summary_train_file_, _$path_to_generated_summary_val_file_, _$path_to_generated_summary_test_file_ according to different datasets
 ```
@@ -79,8 +78,12 @@ Please place the dataset to **datasets/ext_oracle/** or change the dataset direc
 |------------|----------------------|------------|-------|
 | Multi-News | [Bart-Base-Oracle](https://drive.google.com/file/d/13UPz6_AdVpxrjj-uJxhbKLL0ZUGjdTGx/view?usp=sharing), [Bart-Large-Oracle](https://drive.google.com/file/d/1VyIVTSgMb5Rx3BZ0aKtrB8S-gCoJDx6_/view?usp=sharing) | [download](https://drive.google.com/file/d/1-tNFQs6BNKlCJl4LGJ8SGpjHH1an5kfR/view?usp=sharing) | [download](https://drive.google.com/file/d/14lp4ViPDJlYZScQc5R4N7Y5Oje1-YShi/view?usp=sharing)|
 
-## Predictions of REFLECT
+## Predictions
+### REFLECT
 WikiCatSum: [Animal](https://drive.google.com/file/d/1mlFr_5ukU7e3AIEPHDfhv3PBVpckp92U/view?usp=sharing), [Company](https://drive.google.com/file/d/1gQI541wJfIA260ZgO-b7JIORGbofIG2E/view?usp=sharing), [Film](https://drive.google.com/file/d/1KHdyBz7TjE4BwUAkq58BdMXJvlmOEs6c/view?usp=sharing)
+
+### Finetuned BART-Large
+WikiCatSum: [Animal](https://drive.google.com/file/d/1PP5nXdXSjH4jy6J0fjlDVZXJ-h9LoWf5/view?usp=sharing), [Company](https://drive.google.com/file/d/1nUgWnnzsGQvAqR8cj8hYqPL37CaeogpJ/view?usp=sharing), [Film](https://drive.google.com/file/d/1xxTevhR2pqcbh9mjuJG2GUHsf63OZDzf/view?usp=sharing)
 
 <!-- ## Predictions of REFLECT
 [WikiCatSum](https://drive.google.com/drive/folders/1CSt5VORNeB1-fAqk4GAts0Jp9VYyfImP?usp=sharing)
