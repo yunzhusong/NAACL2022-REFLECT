@@ -67,6 +67,9 @@ python ./data_download/output_dataset.py\
 
 ### Option 2. Dowload Our Processed Dataset
 Please place the dataset at **datasets/ext_oracle/** or change the dataset directory path in **src/data/build_datasets.py**.
+Please sent an email to Yun-Zhu Song (yzsong.ee09@nycu.edu.tw) to request our processed dataset.
+
+<!-- ## Predictions of REFLECT
 
 [Multi-News](https://drive.google.com/file/d/17tZkzbtqLrcK1fHEGvQzlNwbgTSI6IjH/view?usp=sharing),
 [Xscience](https://drive.google.com/file/d/1MIERE9Y4tZEkKp2DTPtZXrGelRgUkqZJ/view?usp=sharing),
@@ -85,7 +88,6 @@ Please place the dataset at **datasets/ext_oracle/** or change the dataset direc
 |---------|------------|---------|
 | WikiCatSum |[Animal](https://drive.google.com/file/d/1PP5nXdXSjH4jy6J0fjlDVZXJ-h9LoWf5/view?usp=sharing), [Company](https://drive.google.com/file/d/1nUgWnnzsGQvAqR8cj8hYqPL37CaeogpJ/view?usp=sharing), [Film](https://drive.google.com/file/d/1xxTevhR2pqcbh9mjuJG2GUHsf63OZDzf/view?usp=sharing)|[Animal](https://drive.google.com/file/d/1mlFr_5ukU7e3AIEPHDfhv3PBVpckp92U/view?usp=sharing), [Company](https://drive.google.com/file/d/1gQI541wJfIA260ZgO-b7JIORGbofIG2E/view?usp=sharing), [Film](https://drive.google.com/file/d/1KHdyBz7TjE4BwUAkq58BdMXJvlmOEs6c/view?usp=sharing) |
 
-<!-- ## Predictions of REFLECT
 [WikiCatSum](https://drive.google.com/drive/folders/1CSt5VORNeB1-fAqk4GAts0Jp9VYyfImP?usp=sharing)
 -->
 
