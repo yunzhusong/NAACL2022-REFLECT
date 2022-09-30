@@ -67,7 +67,7 @@ python ./data_download/output_dataset.py\
 
 ### Option 2. Dowload Our Processed Dataset
 Please place the dataset at **datasets/ext_oracle/** or change the dataset directory path in **src/data/build_datasets.py**.
-Please sent an email to Yun-Zhu Song (yzsong.ee09@nycu.edu.tw) to request our processed dataset.
+Please sent an email to Yun-Zhu Song (yzsong.ee07@nycu.edu.tw) to request our processed dataset.
 
 <!-- ## Predictions of REFLECT
 
