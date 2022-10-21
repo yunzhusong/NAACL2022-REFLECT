@@ -67,21 +67,24 @@ python ./data_download/output_dataset.py\
 
 ### Option 2. Dowload Our Processed Dataset
 Please place the dataset at **datasets/ext_oracle/** or change the dataset directory path in **src/data/build_datasets.py**.
+<!--
 Please sent an email to Yun-Zhu Song (yzsong.ee07@nycu.edu.tw) to request our processed dataset.
+-->
 
-<!-- ## Predictions of REFLECT
-
-[Multi-News](https://drive.google.com/file/d/17tZkzbtqLrcK1fHEGvQzlNwbgTSI6IjH/view?usp=sharing),
-[Xscience](https://drive.google.com/file/d/1MIERE9Y4tZEkKp2DTPtZXrGelRgUkqZJ/view?usp=sharing),
-[WikiCatSum](https://drive.google.com/file/d/1BoDkO6P-lmCrRKnLhT7PNnOWzyRCNPF1/view?usp=sharing)
+[Multi-News](https://drive.google.com/file/d/1fwnZgOzPoUf0HVUgbkPWP5XL2VUw8LYa/view?usp=sharing),
+[Xscience](https://drive.google.com/file/d/1ZJ-MszlNR3smpns5bHcjEnKyR-aUasvw/view?usp=sharing),
+[WikiCatSum](https://drive.google.com/file/d/13bAZg6zh54DQZpdXDIuGFm5pqEmKaAFZ/view?usp=sharing)
 
 
 ## Trained Model
 
 |   Dataset  | Finetuned Abstractor | Pretrained (REFLECT-MLE) | Final (REFLECT) |
 |------------|----------------------|--------------------------|-----------------|
-| Multi-News | [Bart-Base-Oracle](https://drive.google.com/file/d/13UPz6_AdVpxrjj-uJxhbKLL0ZUGjdTGx/view?usp=sharing), [Bart-Large-Oracle](https://drive.google.com/file/d/1VyIVTSgMb5Rx3BZ0aKtrB8S-gCoJDx6_/view?usp=sharing) | [download](https://drive.google.com/file/d/1-tNFQs6BNKlCJl4LGJ8SGpjHH1an5kfR/view?usp=sharing) | [download](https://drive.google.com/file/d/14lp4ViPDJlYZScQc5R4N7Y5Oje1-YShi/view?usp=sharing)|
+| Multi-News | [Bart-Base-Oracle](https://drive.google.com/file/d/1MEouMEzWtzJ9du4w6-wCkmJcDg8jOHzw/view?usp=sharing), [Bart-Large-Oracle](https://drive.google.com/file/d/1VONOaQQhWe0RG2ogGlRsnUCQSe29ac9o/view?usp=sharing) | [download](https://drive.google.com/file/d/1-0YqMCdwwzkS4IafL0aM5QJqQLiWIUml/view?usp=sharing) | [download](https://drive.google.com/file/d/1tZqtDb7wzZgTxJVWZsalsrCxratxNKgV/view?usp=sharing)|
 
+<!--
+
+| WikiCatSum/animal | [Bart-Base-Oracle]()[Bart-Large-Oracle]|[download]()|[download]()|
 
 ## Predictions
 | Dataset | BART-Large | REFLECT |
