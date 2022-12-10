@@ -50,29 +50,6 @@ def output_datasets(args):
             extension = args.test_file.split(".")[-1]
         datasets = load_dataset(extension, data_files=data_files)
 
-    # [For newsroom]
-    # only use data with abstractive summary
-    # which follow the setting of PEGASUS.
-    if args.dataset_name == 'newsroom':
-        print("Extract abstractive data for newsroom dataset...")
-        datasets = datasets.filter(lambda example: example['density_bin']=='abstractive')
-
-    # [For reddict TIFU]
-    # only have training examples, manually split in 80/10/10
-    if args.dataset_name in ('reddit','reddit_tifu'):
-        print("Make train/valid/test splits for Reddit(-TIFU) dataset...")
-
-        train_data_num = datasets.num_rows['train']
-        first_sep_point = int(train_data_num * 0.8)
-        second_sep_point = first_sep_point + int(train_data_num * 0.1)
-
-        train_dataset = datasets['train'].select(range(0, first_sep_point))
-        val_dataset = datasets['train'].select(range(first_sep_point, second_sep_point))
-        test_dataset = datasets['train'].select(range(second_sep_point, train_data_num))
-        datasets['train'] = train_dataset
-        datasets['validation'] = val_dataset
-        datasets['test'] = test_dataset
-
     os.makedirs(args.output_dir, exist_ok=True)
 
     if args.dataset_name == 'GEM/wiki_cat_sum':
@@ -99,14 +76,14 @@ def output_datasets(args):
                     df['summary'] = text_list
                     df['topic'] = topic_list
 
-            df.to_pickle(pjoin(args.output_dir, key+'.pkl'))
-            #with open(pjoin(args.output_dir, key+'.csv'), 'wb') as f_o:
-            #    df.to_csv(f_o, index=False)
+            #df.to_pickle(pjoin(args.output_dir, key+'.pkl'))
+            with open(pjoin(args.output_dir, key+'.csv'), 'wb') as f_o:
+                df.to_csv(f_o, index=False)
     else:
         for key in datasets.keys():
-            df.to_pickle(pjoin(args.output_dir, key+'.pkl'))
-            #with open(pjoin(args.output_dir, key+'.csv'), 'wb') as f_o:
-            #    datasets[key].to_csv(f_o, index=False)
+            #df.to_pickle(pjoin(args.output_dir, key+'.pkl'))
+            with open(pjoin(args.output_dir, key+'.csv'), 'wb') as f_o:
+                datasets[key].to_csv(f_o, index=False)
 
     """
     if args.do_predict:
@@ -128,7 +105,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Output Dataset into CSV for other usage.')
     parser.add_argument("--output_dir", type=str, required=True)
-    parser.add_argument("--dataset_name", type=str, required=True)
+    parser.add_argument("--dataset_name", type=str, default=None)
     parser.add_argument("--dataset_config_name", type=str, default=None)
     parser.add_argument("--train_file", type=str)
     parser.add_argument("--validation_file", type=str)

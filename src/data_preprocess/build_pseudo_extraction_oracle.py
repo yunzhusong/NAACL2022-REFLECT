@@ -168,21 +168,22 @@ def extractive_oracle(args,
 
     proper_end_characters = ['.', '?', '!', '...']
 
-    #art_column = art_column
-    #summ_column = summ_column
-
     def _extractive_oracle(data):
 
         if not isinstance(data[art_column], str):
-            data[art_column] = " "
+            print("[Warning] There is an empty summary in dataset, gonna replace it with 'Empty content'")
+            data[art_column] = "Empty content"
         if not isinstance(data[summ_column], str):
-            data[summ_column] = " "
+            print("[Warning] There is an empty document in dataset, gonna replace it with 'Empty content'")
+            data[summ_column] = "Empty content"
 
         # NOTE: handle special tokens in multi-documents
         if args.dataset == 'multi_news':
 
             arts, art_sents = [], []
-            articles = data[art_column].split("|||||")[:-1]
+            #articles = data[art_column].split("|||||")[:-1] # NOTE: multi-news is updated
+            articles = data[art_column].split("|||||")
+
             for art in articles:
                 art = art.strip()
                 if art == "":
@@ -256,7 +257,7 @@ def extractive_oracle(args,
         data['document_num_ext_idx'] = len(selected_indices)
         data['document_rouge1_f'] = rouge_1_scores
         data['document_rouge2_f'] = rouge_2_scores
-        data["document"] = art_sents
+        #data["document"] = art_sents
 
         """
         #data[summ_column + '_ext'] = ' '.join(selected_sents) # NOTE
@@ -280,6 +281,7 @@ def extractive_oracle(args,
     # Output results as CSV
     os.makedirs(args.output_dir, exist_ok=True)
     df.to_csv(os.path.join(args.output_dir, file_name), index=False)
+
 
 def combine_generated_result_to_df(args,
                                    file_path,

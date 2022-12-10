@@ -5,17 +5,17 @@
   "task_type": "seq2seq",
   "training_type": "mle",
 
-  "dataset_name": "multi_news_bl_own",
-  "model_name_or_path": "facebook/bart-base",
+  "dataset_name": "multi_news_own",
+  "model_name_or_path": "facebook/bart-large",
 
-  "output_dir": "../outputs/multi_news/finetuned_abs/bart-base-O",
-  "logging_dir":"../outputs/multi_news/finetuned_abs/bart-base-O/log",
+  "output_dir": "../outputs/multi_news_own/finetuned_abs/bart-large-O",
+  "logging_dir":"../outputs/multi_news_own/finetuned_abs/bart-large-O/log",
 
-  "per_device_train_batch_size": 8,
-  "per_device_eval_batch_size": 8,
-  "gradient_accumulation_steps": 2,
+  "per_device_train_batch_size": 2,
+  "per_device_eval_batch_size": 2,
+  "gradient_accumulation_steps": 8,
 
-  "num_train_epochs": 15,
+  "num_train_epochs": 2,
   "lr_scheduler_type": "constant",
   "learning_rate": 3e-5,
   "max_grad_norm": 0.1,
@@ -31,8 +31,8 @@
   "evaluation_strategy": "steps",
   "save_strategy": "steps",
 
-  "eval_steps": 500,
-  "save_steps": 500,
+  "eval_steps": 100,
+  "save_steps": 100,
   "save_total_limit": 1,
   "logging_steps": 20,
   "max_val_samples": 1000

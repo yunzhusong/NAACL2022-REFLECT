@@ -115,7 +115,6 @@ def build_trainer(model_args, data_args, training_args, model, tokenizer, train_
         all_result = {k: round(v, 4) for k, v in all_result.items()}
         return all_result
 
-
     def compute_metrics(eval_preds):
         preds, labels = eval_preds
         if isinstance(preds, tuple):

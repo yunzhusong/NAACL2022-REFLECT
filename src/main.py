@@ -3,11 +3,11 @@
 The code is developed based on :
     https://github.com/huggingface/transformers/tree/v4.4.2/examples/seq2seq
 """
-
 import logging
 import os
 import sys
 import copy
+from pprint import pprint
 
 import torch
 torch.autograd.set_detect_anomaly(True) 
@@ -21,7 +21,6 @@ from transformers.utils import check_min_version
 from data.build_datasets import build_datasets
 from pipelines.build_trainer import build_trainer
 from others.arguments import ModelArguments, DataTrainingArguments, CustomSeq2SeqTrainingArguments
-from others.config import trained_abs_model_mapping, trained_ext_model_mapping, trained_model_mapping
 from processes import train_process, eval_process, predict_process
 
 # rl learning
@@ -47,6 +46,7 @@ def main():
         shutil.copyfile(sys.argv[1], "{}/{}".format(training_args.output_dir, json_file_name))
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
+    pprint(training_args)
 
     print("Task type: {}".format(training_args.task_type))
     if training_args.do_train:
@@ -57,7 +57,7 @@ def main():
         elif training_args.training_type=="ext_rl":
             print("Credit-Aware Self-Critic: {}".format(not training_args.update_full_action))
         elif training_args.training_type=="mle":
-            print("Train Abstractorwith {} as input".format(data_args.text_column))
+            print("Train Abstractor with {} as input".format(data_args.text_column))
         else:
             raise ValueError("--task_type sould be one of `ext_mle/ext_rl/mle`")
 
@@ -192,13 +192,9 @@ def main():
 
     if model_args.load_trained_model_from:
         ckpt_path = os.path.join(model_args.load_trained_model_from, "pytorch_model.bin")
-        if not os.path.exists(ckpt_path):
-            trained_models = trained_model_mapping[data_args.dataset_name]
-            trained_model = trained_models[model_args.load_trained_model_from] 
-            ckpt_path = os.path.join(trained_model, "pytorch_model.bin")
         ckpt = torch.load(ckpt_path)
         keys = model.load_state_dict(ckpt, strict=False)
-        logger.warning("Load the specified trained model")
+        logger.warning(f"Load the specified trained model from {model_args.load_trained_model_from}")
         print(keys)
 
     if model_args.load_trained_extractor_from:
@@ -208,12 +204,8 @@ def main():
             logger.warning("Load the pretrained model from huggingface")
         except:
             ckpt_path = os.path.join(model_args.load_trained_extractor_from, "pytorch_model.bin")
-            if not os.path.exists(ckpt_path):
-                trained_extractors = trained_ext_model_mapping[data_args.dataset_name]
-                trained_extractor = trained_extractors[model_args.load_trained_extractor_from] 
-                ckpt_path = os.path.join(trained_extractor, "pytorch_model.bin")
             ckpt = torch.load(ckpt_path)
-            logger.warning("Load the trained extractor from local file")
+            logger.warning(f"Load the trained extractor from {model_args.load_trained_extractor_from}")
             
         new_ckpt = {}
         for k, v in ckpt.items():
@@ -255,15 +247,8 @@ def main():
 
     if model_args.load_trained_abstractor_from:
         ckpt_path = os.path.join(model_args.load_trained_abstractor_from, "pytorch_model.bin")
-        if not os.path.exists(ckpt_path):
-            trained_abstractors = trained_abs_model_mapping[data_args.dataset_name]
-            trained_abstractor = trained_abstractors[model_args.load_trained_abstractor_from] 
-
-            ckpt_path = os.path.join(trained_abstractor, "pytorch_model.bin")
         ckpt = torch.load(ckpt_path)
-        #keys = model.abstractor.model.load_state_dict(ckpt, strict=False)
-        #keys = model.abstractor.load_state_dict(ckpt, strict=False)
-        logger.warning("Load the trained abstractor from local file")
+        logger.warning(f"Load the trained abstractor from {model_args.load_trained_abstractor_from}")
         keys = model.abstractor.load_state_dict(ckpt, strict=True)
         print(keys)
 

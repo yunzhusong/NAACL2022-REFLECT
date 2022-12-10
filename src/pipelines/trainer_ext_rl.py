@@ -692,13 +692,13 @@ class CustomTrainer(Seq2SeqTrainer):
         summaries = self.tokenizer.batch_decode(indices, skip_special_tokens=True)
         if score == "f":
             rewards = [r.fmeasure for r in self.rouge.compute(predictions=summaries, references=target_summaries,
-                                            use_agregator=False, rouge_types=[rouge_type])[rouge_type]]
+                                            use_aggregator=False, rouge_types=[rouge_type])[rouge_type]] 
         elif score == "r":
             rewards = [r.recall for r in self.rouge.compute(predictions=summaries, references=target_summaries,
-                                    use_agregator=False, rouge_types=[rouge_type])[rouge_type]]
+                                            use_aggregator=False, rouge_types=[rouge_type])[rouge_type]]
         elif score == "p":
             rewards = [r.precision for r in self.rouge.compute(predictions=summaries, references=target_summaries,
-                                    use_agregator=False, rouge_types=[rouge_type])[rouge_type]]
+                                            use_aggregator=False, rouge_types=[rouge_type])[rouge_type]]
         
 
         return torch.tensor(rewards).to(self.args.device)

@@ -1,0 +1,41 @@
+{
+  "do_train" : true,
+  "do_eval" : true,
+
+  "task_type": "seq2seq",
+  "training_type": "mle",
+
+  "dataset_name": "multi_news_own",
+  "model_name_or_path": "facebook/bart-large-cnn",
+
+  "output_dir": "../outputs/multi_news_own/finetuned_abs/bart-large-A",
+  "logging_dir":"../outputs/multi_news_own/finetuned_abs/bart-large-A/log",
+
+  "per_device_train_batch_size": 2,
+  "per_device_eval_batch_size": 2,
+  "gradient_accumulation_steps": 8,
+
+  "num_train_epochs": 2,
+  "lr_scheduler_type": "constant",
+  "learning_rate": 3e-5,
+  "max_grad_norm": 0.1,
+  "label_smoothing_factor": 0.1, 
+
+  "text_column": "document",
+  "data_preprocess": "doc_trun",
+
+  "report_to tensorboard": true,
+  "overwrite_output_dir": true,
+  "predict_with_generate": true,
+  "save_model_accord_to_rouge": true,
+  "evaluation_strategy": "steps",
+  "save_strategy": "steps",
+
+  "eval_steps": 100,
+  "save_steps": 100,
+  "save_total_limit": 1,
+  "logging_steps": 20,
+  "max_val_samples": 1000
+
+}
+

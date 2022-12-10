@@ -319,7 +319,7 @@ class DataTrainingArguments:
         },
     )
     preprocessing_num_workers: Optional[int] = field(
-        default=16,
+        default=1,
         metadata={
             "help": "The number of processes to use for the preprocessing."
         },

@@ -15,76 +15,34 @@ tqdm.pandas()
 from pandarallel import pandarallel
 
 pandarallel.initialize(progress_bar=False)
-import pdb
 
 summarization_name_mapping = {
     "multi_news": ("document", "summary"),
-    "multi_news_own": ("document", "summary"),
-    "multi_news_bl_own": ("document", "summary"),
-
-    "xscience_own": ("document", "related_work"),
-    "xscience_bl_own": ("document", "related_work"),
-
-    "wiki_cat_sum_animal_own": ("paragraphs", "summary"),
-    "wiki_cat_sum_company_own": ("paragraphs", "summary"),
-    "wiki_cat_sum_film_own": ("paragraphs", "summary"),
-    "wiki_cat_sum_animal_o_own": ("document", "summary"),
-    "wiki_cat_sum_company_o_own": ("document", "summary"),
-    "wiki_cat_sum_film_o_own": ("document", "summary"),
-    "wiki_cat_sum_animal_bl_own": ("document", "summary"),
-    "wiki_cat_sum_company_bl_own": ("document", "summary"),
-    "wiki_cat_sum_film_bl_own": ("document", "summary"),
+    "xscience": ("document", "related_work"),
+    "wiki_cat_sum_animal": ("paragraphs", "summary"),
+    "wiki_cat_sum_company": ("paragraphs", "summary"),
+    "wiki_cat_sum_film": ("paragraphs", "summary"),
 }
 
 summarization_length_mapping = {
-    "multi_news": (1024, 256),
-    "multi_news_own": (1024, 512),
-    "multi_news_bl_own": (1024, 512),
-    "xscience_own": (1024, 256),
-    "xscience_bl_own": (1024, 256),
-    "wiki_cat_sum_animal_own": (1024, 128),
-    "wiki_cat_sum_company_own": (1024, 128),
-    "wiki_cat_sum_film_own": (1024, 128),
-    "wiki_cat_sum_animal_o_own": (1024, 128),
-    "wiki_cat_sum_company_o_own": (1024, 128),
-    "wiki_cat_sum_film_o_own": (1024, 128),
-    "wiki_cat_sum_animal_bl_own": (1024, 128),
-    "wiki_cat_sum_company_bl_own": (1024, 128),
-    "wiki_cat_sum_film_bl_own": (1024, 128),
+    "multi_news": (1024, 512),
+    "xscience": (1024, 256),
+    "wiki_cat_sum_animal": (1024, 128),
+    "wiki_cat_sum_company": (1024, 128),
+    "wiki_cat_sum_film": (1024, 128),
 }
 
 summarization_own_file_mapping = {
-    # Original
-    "wiki_cat_sum_animal_own":
-        "../datasets/origin/wikicatsum/animal",
-    "wiki_cat_sum_company_own":
-        "../datasets/origin/wikicatsum/company",
-    "wiki_cat_sum_film_own":
-        "../datasets/origin/wikicatsum/film",
-
-    # With pseudo extraction oracle and rouge score
-    "multi_news_own":
-        "../datasets/ext_oracle/multi_news_own",
-    "xscience_own":
-        "../datasets/ext_oracle/xscience_own",
-    "wiki_cat_sum_animal_o_own":
-        "../datasets/ext_oracle/wikicatsum/animal_own",
-    "wiki_cat_sum_company_o_own":
-        "../datasets/ext_oracle/wikicatsum/company_own",
-    "wiki_cat_sum_film_o_own":
-        "../datasets/ext_oracle/wikicatsum/film_own",
-
-    # With generated summary (bl is short for bart_large)
-    "multi_news_bl_own":
-        "../datasets/ext_oracle/multi_news_bl_own",
-    "xscience_bl_own":
-        "../datasets/ext_oracle/xscience_bl_own",
-    "wiki_cat_sum_animal_bl_own":
-        "../datasets/ext_oracle/wikicatsum/animal_bl_own",
-    "wiki_cat_sum_company_bl_own":
-        "../datasets/ext_oracle/wikicatsum/company_bl_own",
-    "wiki_cat_sum_film_bl_own":
-        "../datasets/ext_oracle/wikicatsum/film_bl_own",
+    "multi_news":
+        "../datasets/ext_oracle/multi_news",
+    "xscience":
+        "../datasets/ext_oracle/xscience",
+    "wiki_cat_sum_animal":
+        "../datasets/ext_oracle/wikicatsum/animal",
+    "wiki_cat_sum_company":
+        "../datasets/ext_oracle/wikicatsum/company",
+    "wiki_cat_sum_film":
+        "../datasets/ext_oracle/wikicatsum/film",
 }
 
 logger = logging.getLogger(__name__)
@@ -94,58 +52,38 @@ def build_datasets(data_args,
                    tokenizer,
                    ):
 
-    if data_args.dataset_name is not None and data_args.dataset_name[
-            -3:] != 'own':
-        # Download and load a dataset from the hub.
-        if data_args.dataset_name == 'cnn_dailymail':
-            data_args.dataset_config_name = '3.0.0'
-        elif data_args.dataset_name == 'reddit_tifu':
-            data_args.dataset_config_name = 'long'
-        elif data_args.dataset_name == 'wikihow':
-            data_args.dataset_config_name = 'all'
-        elif data_args.dataset_name == 'arxiv':
-            data_args.dataset_name = 'scientific_papers'
-            data_args.dataset_config_name = 'arxiv'
-        elif data_args.dataset_name == 'pubmed':
-            data_args.dataset_name = 'scientific_papers'
-            data_args.dataset_config_name = 'pubmed'
+    data_dir = summarization_own_file_mapping.get(data_args.dataset_name, None)
+    data_files = {}
+
+    # Use the data_args.train_file/data_args.valudation_file/data_args.test_file if being assigned, 
+    # otherwise, load from the data_dir
+    extension = "csv"
+
+    if training_args.do_train:
+        if data_args.train_file is not None:
+            data_files["train"] = data_args.train_file
+            extension = data_args.train_file.split(".")[-1]
         else:
-            data_args.dataset_config_name = None
+            data_files["train"] = os.path.join(data_dir, "train.csv")
+            extension = "csv"
 
-        datasets = load_dataset(data_args.dataset_name,
-                                data_args.dataset_config_name)
-    else:
-        # Use your own dataset
-        data_dir = summarization_own_file_mapping.get(data_args.dataset_name, None)
-        data_files = {}
+    if training_args.do_eval:
+        if data_args.validation_file is not None:
+            data_files["validation"] = data_args.validation_file
+            extension = data_args.validation_file.split(".")[-1]
+        else:
+            data_files["validation"] = os.path.join(data_dir, "validation.csv")
+            extension = "csv"
 
-        # Use the data_args.train_file if being assigned, 
-        # otherwise, load from the data_dir
-        if training_args.do_train:
-            if data_args.train_file is not None:
-                data_files["train"] = data_args.train_file
-                extension = data_args.train_file.split(".")[-1]
-            else:
-                data_files["train"] = os.path.join(data_dir, "train.csv")
-                extension = "csv"
+    if training_args.do_predict:
+        if data_args.test_file is not None:
+            data_files["test"] = data_args.test_file
+            extension = data_args.test_file.split(".")[-1]
+        else:
+            data_files["test"] = os.path.join(data_dir, "test.csv")
+            extension = "csv"
 
-        if training_args.do_eval:
-            if data_args.validation_file is not None:
-                data_files["validation"] = data_args.validation_file
-                extension = data_args.validation_file.split(".")[-1]
-            else:
-                data_files["validation"] = os.path.join(data_dir, "validation.csv")
-                extension = "csv"
-
-        if training_args.do_predict:
-            if data_args.test_file is not None:
-                data_files["test"] = data_args.test_file
-                extension = data_args.test_file.split(".")[-1]
-            else:
-                data_files["test"] = os.path.join(data_dir, "test.csv")
-                extension = "csv"
-
-        datasets = load_dataset(extension, data_files=data_files)
+    datasets = load_dataset(extension, data_files=data_files)
 
     # NEW: shuffle datasets before select
     if data_args.shuffle_before_select:
@@ -294,6 +232,11 @@ def build_datasets(data_args,
         total_num_tokens = 0
         tokenized_documents = []
         documents = data["article"]
+
+        #if len(documents) == 0:
+        #    documents = [[""]]
+        #    data["article"] = [["empty"]]
+        #    data["summary_ext"] = [["empty"]]
 
         for i, document in enumerate(documents):
             #sents = nltk.sent_tokenize(document)
@@ -491,7 +434,7 @@ def build_datasets(data_args,
                 df["art_rouges"] = art_rouges
             if data_args.reference_column is not None:
                 df["summary_gen"] = examples[data_args.reference_column]
-
+            
             df = df.progress_apply(lambda d: _tokenize_and_build_sent_index_dense(d), axis=1)
             df = df.drop(columns=["article", "summary_ext", "summary_ext_idx", "art_rouges", "summary_gen"], axis=1)
             model_inputs = {}
