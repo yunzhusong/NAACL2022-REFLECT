@@ -24,16 +24,19 @@ Steps: (1) download the dataset; (2) get the pseudo extractio oracle and rouge s
 
 (1) download dataset
 ```
+cd src
 ./scripts/step1_download_dataset.sh
 ```
 
 (2) get pseudo extraction (take multi_news as examples)
 ```
+cd src
 ./scripts/step2_build_POR_label.sh
 ```
 
 (3) generate summary from finetuned abstractor ([multi_news](https://drive.google.com/file/d/1EDl-HZLQDPWTy9ZMxWvxHPNI_TTnKlYm/view?usp=sharing)) and merge the generated results to dataset. (take multi_news as examples)
 ```
+cd src
 ./scripts/step3_generate_SR_to_dataset.sh
 ```
 
@@ -138,6 +141,7 @@ How to change to different configs
 | xscience_bl_own       | summary_ext        | document            |
 
 ```
+cd src
 python main.py ./scirpts/args/finetune_abs_base_O.json
 python main.py ./scirpts/args/finetine_abs_large_O.json
 python main.py ./scirpts/args/finetine_abs_large_A.json
@@ -146,17 +150,20 @@ python main.py ./scirpts/args/finetine_abs_large_A.json
 ### 2. Extractor Pretraining
 
 ```
+cd src
 python main.py ./scripts/args/train_ext_mle.json
 ```
 
 ### 3. Extractor Training
 
 ```
+cd src
 python main.py ./scripts/args/train_ext_rl.json
 ```
 
 ### 4. Model Evaluation
 ```
+cd src
 python main.py ./scripts/args/pred.json
 python main.py ./scripts/args/eval.json
 ```
