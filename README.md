@@ -14,7 +14,7 @@ pip install -r requirements.txt
 ## Dataset Preparation
 ### Option 1.
 NOTE:
-1. We provide an example for processing multi-news end-to-end **src/scripts/construct_dataset_end2end.sh**
+1. We provide an example for processing multi-news end-to-end in **src/scripts/construct_dataset_end2end.sh**
 2. The names of datasets can be found in **src/data/build_datasets.py**.
 
 
