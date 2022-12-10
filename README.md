@@ -15,74 +15,96 @@ pip install -r requirements.txt
 
 ## Dataset Preparation
 ### Option 1.
-Steps: (1) download the dataset; (2) get the pseudo extractio oracle and rouge score for each document sentence; (3) generate summary from the fine-tuned abstractor; (4) merge the generated summary to the dataset. The names of datasets can be found in **src/data/build_datasets.py**.
+NOTE:
+1. We provide an example for processing multi-news end-to-end **src/scripts/construct_dataset_end2end.sh**
+2. The names of datasets can be found in **src/data/build_datasets.py**.
 
+
+Steps: (1) download the dataset; (2) get the pseudo extractio oracle and rouge scores for each document sentence; (3) generate summary from the fine-tuned abstractor and merge the generated summary to the dataset. 
 
 (1) download dataset
-
-**Multi-News**
 ```
-python ./data_download/output_dataset.py\
-  --output_dir ../datasets/origin/multi_news\
-  --dataset_name multi_news\
-```
-**Milti-XScience**
-```
-python ./data_download/output_dataset.py\
-  --output_dir ../datasets/origin/xscience\
-  --dataset_name multi_x_science_sum\
-```
-**WikiCatSum** (NOTE: The version of transformers is 4.12.5)
-```
-python ./data_download/output_dataset.py\
-  --output_dir ../datasets/origin/wikicatsum/animal\
-  --dataset_name GEM/wiki_cat_sum\
-  --dataset_config animal\
-  
-python ./data_download/output_dataset.py\
-  --output_dir ../datasets/origin/wikicatsum/company\
-  --dataset_name GEM/wiki_cat_sum\
-  --dataset_config company\
-  
-python ./data_download/output_dataset.py\
-  --output_dir ../datasets/origin/wikicatsum/film\
-  --dataset_name GEM/wiki_cat_sum\
-  --dataset_config film\
+./scripts/step1_download_dataset.sh
 ```
 
 (2) get pseudo extraction (take multi_news as examples)
 ```
-./scripts/build_POR_dataset.sh
+./scripts/step2_build_POR_label.sh
 ```
 
-(3) generate summary from fine-tuned abstractor, remember to assign the _$checkpoint_to_finetuned_abs_ and _$dataset_ according to different datasets
+(3) generate summary from finetuned abstractor ([multi_news](https://drive.google.com/file/d/1EDl-HZLQDPWTy9ZMxWvxHPNI_TTnKlYm/view?usp=sharing)) and merge the generated results to dataset. (take multi_news as examples)
 ```
-./scripts/generate_SR.sh
-```
-(4) combining the generated summary to dataset, remember to assign _$merged_data_dir_, _$data_dir_, _$path_to_generated_summary_train_file_, _$path_to_generated_summary_val_file_, _$path_to_generated_summary_test_file_ according to different datasets
-```
-./scripts/build_SR_dataset.sh
+./scripts/step3_generate_SR_to_dataset.sh
 ```
 
 
 ### Option 2. Dowload Our Processed Dataset
-Please place the dataset at **datasets/ext_oracle/** or change the dataset directory path in **src/data/build_datasets.py**.
+Please place the dataset at **datasets/ext_oracle/** according to the following code structure or change the dataset directory path writing in **src/data/build_datasets.py**.
 <!--
 Please sent an email to Yun-Zhu Song (yzsong.ee07@nycu.edu.tw) to request our processed dataset.
 -->
 
-[Multi-News](https://drive.google.com/file/d/1fwnZgOzPoUf0HVUgbkPWP5XL2VUw8LYa/view?usp=sharing),
-[Xscience](https://drive.google.com/file/d/1ZJ-MszlNR3smpns5bHcjEnKyR-aUasvw/view?usp=sharing),
-[WikiCatSum](https://drive.google.com/file/d/13bAZg6zh54DQZpdXDIuGFm5pqEmKaAFZ/view?usp=sharing)
+[Multi-News](https://drive.google.com/file/d/1i8JuegEmGik-MhEU9GsKy3KcaJSr_k-I/view?usp=sharing),
+[Xscience](https://drive.google.com/file/d/1R5eyDaCtorCh14yijqfCyduCjffYv8Ne/view?usp=sharing),
+[WikiCatSum](https://drive.google.com/file/d/1Q6IVCf2nUFLtlW1oX4l5B6_tcWLUuLHA/view?usp=sharing)
+
+#### Code Structure
+```
+src\
+  |_main.py -> main function
+  |_process.py -> for defining different operation process
+  |_scripts
+    |_args\
+      |_finetune_abs_base_O.json -> configuration of finetuning abstractor (base, oracle input) for supporting extractor RL training
+      |_finetune_abs_large_O.json -> configuration of finetuning abstractor (large, oracle input) for test time inference
+      |_finetune_abs_large_A.json -> configuration of finetuning abstractor (large, article input) for providing summary reference
+      |_train_ext_mle.json -> configuration of training extractor with MLE (extractor pretraining)
+      |_train_ext_rl.json -> configuration of training extractor with RL (extractor training)
+      |_pred.json -> configuration of obtaining the extraction prediction
+      |_eval.json -> configuration of evaluating the extraction results
+    |_run.sh -> recording the scripts for the training and evaluation steps
+    |_construct_dataset_end2end.sh -> an example for constructing the multi_news end-to-end
+
+datasets\
+  |_origin\
+    |_multi_news\
+    |_xscience\
+    |_wikicatsum\
+  |_ext_oracle\ -> put the processed datasets in this directory
+    |_multi_news\
+    |_xscience\
+    |_wikicatsum\
+      |_animal\
+      |_company\
+      |_film\
+      
+outputs\ -> directory for saving experiments
+  |_multi_news\
+    |_finetuned_abs\
+      |_bart-base-O\ -> for supporting extractor RL training
+      |_bart-large-O\ -> for test time inference
+      |_bart-large-A\ -> for generating summary reference
+    |_extractor_mle\
+      |_SR_POR\ -> pretrained extractor
+    |_extractor_rl\
+      |_final\ -> final model
+    
+```
+Download the datasets and put
+
 
 
 ## Trained Model
 
 |   Dataset  | Finetuned Abstractor | Pretrained (REFLECT-MLE) | Final (REFLECT) |
 |------------|----------------------|--------------------------|-----------------|
-| Multi-News | [Bart-Base-Oracle](https://drive.google.com/file/d/1MEouMEzWtzJ9du4w6-wCkmJcDg8jOHzw/view?usp=sharing), [Bart-Large-Oracle](https://drive.google.com/file/d/1VONOaQQhWe0RG2ogGlRsnUCQSe29ac9o/view?usp=sharing) | [download](https://drive.google.com/file/d/1-0YqMCdwwzkS4IafL0aM5QJqQLiWIUml/view?usp=sharing) | [download](https://drive.google.com/file/d/1tZqtDb7wzZgTxJVWZsalsrCxratxNKgV/view?usp=sharing)|
+| Multi-News | [Bart-base-Oracle](https://drive.google.com/file/d/12RlJUo0Yp8J9tkgJBpGyBcoPBevif1JL/view?usp=sharing), [Bart-large-Oracle](https://drive.google.com/file/d/1VONOaQQhWe0RG2ogGlRsnUCQSe29ac9o/view?usp=sharing), [Bart-large-Article](https://drive.google.com/file/d/1EDl-HZLQDPWTy9ZMxWvxHPNI_TTnKlYm/view?usp=sharing) | [SR_POR](https://drive.google.com/file/d/1bI0tiJN3fqI22eTRWykiv4yEWTq9oBaM/view?usp=sharing) | [final](https://drive.google.com/file/d/1tZqtDb7wzZgTxJVWZsalsrCxratxNKgV/view?usp=sharing) |
+
+
 
 <!--
+|------------|----------------------|--------------------------|-----------------|
+| Multi-News | [Bart-Base-Oracle](https://drive.google.com/file/d/1MEouMEzWtzJ9du4w6-wCkmJcDg8jOHzw/view?usp=sharing), [Bart-Large-Oracle](https://drive.google.com/file/d/1VONOaQQhWe0RG2ogGlRsnUCQSe29ac9o/view?usp=sharing) | [download](https://drive.google.com/file/d/1-0YqMCdwwzkS4IafL0aM5QJqQLiWIUml/view?usp=sharing) | [download](https://drive.google.com/file/d/1tZqtDb7wzZgTxJVWZsalsrCxratxNKgV/view?usp=sharing)|
 
 | WikiCatSum/animal | [Bart-Base-Oracle]()[Bart-Large-Oracle]|[download]()|[download]()|
 
@@ -93,7 +115,6 @@ Please sent an email to Yun-Zhu Song (yzsong.ee07@nycu.edu.tw) to request our pr
 
 [WikiCatSum](https://drive.google.com/drive/folders/1CSt5VORNeB1-fAqk4GAts0Jp9VYyfImP?usp=sharing)
 -->
-
 
 ## Training
 
@@ -117,7 +138,9 @@ How to change to different configs
 | xscience_bl_own       | summary_ext        | document            |
 
 ```
-python main.py ./scirpts/args/finetine_abs.json
+python main.py ./scirpts/args/finetune_abs_base_O.json
+python main.py ./scirpts/args/finetine_abs_large_O.json
+python main.py ./scirpts/args/finetine_abs_large_A.json
 ```
 
 ### 2. Extractor Pretraining
@@ -170,4 +193,23 @@ python main.py ./scripts/args/eval.json
 "use_mixer_loss": Whether to consider the MLE loss. dedault: true.
 "mixer_weight": The weight for mixing the MLE and RL loss. default: 0.1.
 "update_full_action": Wether to update the full action or only update the output with the sampled action that are different from the greedy action. false for CASC, true for SC.
+```
+
+---
+Citation
+```
+@inproceedings{song-etal-2022-improving,
+    title = "Improving Multi-Document Summarization through Referenced Flexible Extraction with Credit-Awareness",
+    author = "Song, Yun-Zhu  and
+      Chen, Yi-Syuan  and
+      Shuai, Hong-Han",
+    booktitle = "Proceedings of the 2022 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies",
+    month = jul,
+    year = "2022",
+    address = "Seattle, United States",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2022.naacl-main.120",
+    doi = "10.18653/v1/2022.naacl-main.120",
+    pages = "1667--1681",
+}
 ```
