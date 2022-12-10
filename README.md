@@ -91,9 +91,6 @@ outputs\ -> directory for saving experiments
       |_final\ -> final model
     
 ```
-Download the datasets and put
-
-
 
 ## Trained Model
 
