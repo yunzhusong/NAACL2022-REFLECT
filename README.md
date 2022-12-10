@@ -5,8 +5,6 @@ Code for the paper: [Improving Multi-Document Summarization through Referenced F
 
 Author: [@Yun-Zhu Song](http://github.com/yunzhusong), [@Yi-Syuan Chen](https://github.com/YiSyuanChen),Hong-Han Shuai
 
-The preprocessed datasets and pretrained model will be released soon.
-
 ---
 ## Referenced Environment Setup
 ```
