@@ -180,6 +180,7 @@ def main():
 
             model = ReflectModel(training_args, tokenizer, abstractor, article_extractor, section_extractor)
         else:
+            from transformers import RobertaForTokenClassifier
             extractor = RobertaForTokenClassifier(ext_config, training_args)
             model = ReflectModel(training_args, tokenizer, abstractor, extractor)
 
