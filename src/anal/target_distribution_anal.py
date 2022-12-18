@@ -12,7 +12,7 @@ pandarallel.initialize(progress_bar=True)
 import pdb
 
 from .data_preprocess.extraction import cal_rouge
-from .data_preprocess.extractive_oracle_by_generation import summarization_name_mapping
+from .data.build_datasets import summarization_name_mapping 
 
 
 def examine_target_distribution(file_path,
