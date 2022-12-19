@@ -5,24 +5,13 @@ import numpy as np
 import pandas as pd
 import nltk
 from tqdm import tqdm
+from data.build_datasets import summarization_name_mapping
 
 tqdm.pandas()
 from pandarallel import pandarallel
 
 pandarallel.initialize(progress_bar=True)
 import pdb
-
-summarization_name_mapping = {
-    "multi_news": ("document", "summary"),
-    "scientific_papers": ("article", "abstract"),
-    "wiki_cat_sum": ("paragraphs", "summary"),
-    "big_patent": ("description", "abstract"),
-    "billsum": ("text", "summary"),
-    "cnn_dailymail": ("article", "highlights"),
-    "gigaword": ("document", "summary"),
-    "wikihow": ("text", "headline"),  # Manual
-    "xsum": ("document", "summary"),
-}
 
 ##### From PreSumm (EMNLP 2019) ####
 # NOTE: this is way more faster than huggingface metrics
