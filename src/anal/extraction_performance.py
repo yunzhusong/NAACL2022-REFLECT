@@ -5,7 +5,7 @@ from datasets import load_metric
 import pdb
 
 
-metric = load_metric("rouge", experiment_id=exp_id) if training_args.predict_with_generate else None
+metric = load_metric("rouge")
 
 def _postprocess_text(texts):
     texts = [text.strip() for text in texts]
