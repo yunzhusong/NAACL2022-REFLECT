@@ -1,4 +1,7 @@
-""" Evaluate the extraction performance. """
+""" 
+Evaluate the extraction performance. 
+Unused and to be deprecated.
+"""
 import os
 import argparse
 from datasets import load_metric
