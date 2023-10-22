@@ -97,7 +97,7 @@ outputs\ -> directory for saving experiments
 |   Dataset  | Finetuned Abstractor | Pretrained (REFLECT-MLE) | Final (REFLECT) |
 |------------|----------------------|--------------------------|-----------------|
 | Multi-News | [Bart-base-Oracle](https://drive.google.com/file/d/12RlJUo0Yp8J9tkgJBpGyBcoPBevif1JL/view?usp=sharing), [Bart-large-Oracle](https://drive.google.com/file/d/1VONOaQQhWe0RG2ogGlRsnUCQSe29ac9o/view?usp=sharing), [Bart-large-Article](https://drive.google.com/file/d/1EDl-HZLQDPWTy9ZMxWvxHPNI_TTnKlYm/view?usp=sharing) | [SR_POR](https://drive.google.com/file/d/1bI0tiJN3fqI22eTRWykiv4yEWTq9oBaM/view?usp=sharing) | [final](https://drive.google.com/file/d/1tZqtDb7wzZgTxJVWZsalsrCxratxNKgV/view?usp=sharing) |
-
+|  XScience  |                      |                          | [final](https://drive.google.com/file/d/1zdC5XmFzWS3gt-_tyg8Q-EDKeJ5dzhHt/view?usp=sharing) |
 
 
 <!--
